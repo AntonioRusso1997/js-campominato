@@ -40,14 +40,22 @@ while (userNumbers.length < attempts && foundNumber == false) {
         userNumbers.push(userNumber);
         // Se il numero è nella lista della CPU la partite si conclude.
         if (findInArray(cpuNumbers, userNumber) == true) {
-        console.log("partita finita");
+        console.log("GAME OVER!");
         foundNumber = true;
         } else {
         score+= 1;
         }
     }
   }
-console.log("score: " + score)
+
+if (userNumbers.length == attempts) {
+    console.log("Hai vinto la partita! GG!")
+} else {
+    console.log("Mi dispiace, hai perso!")
+}
+console.log("Punteggio totale: " + score);
+
+
 
 /* ----- FUNZIONI ----- */
 
