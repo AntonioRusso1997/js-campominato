@@ -9,54 +9,82 @@ Al termine della partita il software deve comunicare il punteggio, cioè il nume
 
 
 //Dichiaro variabili
+var startBtn = document.getElementById("start");
 var cpuNumbers = [];
 var userNumbers = [];
 var userNumber;
 var bombNumber = 16;
-var totalNumber = 100;
-var attempts = totalNumber - bombNumber; //per testare ho messo 5 tentativi, alla fine "alzerò" ad 84.
+var totalNumber = 0;
+var attempts; //per testare ho messo 5 tentativi, alla fine "alzerò" ad 84.
 var foundNumber = false;
 var score = 0;
 
-//La CPU genera i 16 numeri casuali compresi da 1 a 100
 
-// Creo ciclo while dove indico anche la condizione per inserire un numero solo se non è già presente nell'array.
-while (cpuNumbers.length < bombNumber) {
-    var randomNumber = randomNumberGenerator(1, totalNumber);
-    var findNumber = findInArray(cpuNumbers, randomNumber);
-    if (findNumber == false) {
-        cpuNumbers.push(randomNumber);
-    }
-}
-console.log("Numeri Bomba: " + cpuNumbers);
+// Chiedo all'utente di scegliere la difficoltà di gioco.
+startBtn.addEventListener("click", 
+    function() {
+        var difficulty = document.getElementById("difficolta").value;
 
-// Chiedo all'utente di inserire uno alla volta un numero con 84 tentativi a disposizione.
+        //Creo switch per la difficoltà
+        switch (difficulty) {
 
-while (userNumbers.length < attempts && foundNumber == false) {
-     userNumber = parseInt(prompt("Inserisci un numero da 1 a " + totalNumber));
-    wrongNumber();
-  
-    if (findInArray(userNumbers, userNumber) == false) {
-        // Se il numero non è presente viene normalmente inviato.
-        userNumbers.push(userNumber);
-        // Se il numero è nella lista della CPU la partite si conclude.
-        if (findInArray(cpuNumbers, userNumber) == true) {
-        console.log("GAME OVER!");
-        foundNumber = true;
-        } else {
-        score+= 1;
+            case "normal":
+                totalNumber = 80;
+                attempts = totalNumber - bombNumber;
+                break;
+            
+            case "hard":
+                totalNumber = 50;
+                attempts = totalNumber - bombNumber;
+                break;
+
+            default:
+                totalNumber = 100;
+                attempts = totalNumber - bombNumber;
         }
+        
+        //La CPU genera i 16 numeri casuali       
+        
+        
+        // Creo ciclo while dove indico anche la condizione per inserire un numero solo se non è già presente nell'array.
+        while (cpuNumbers.length < bombNumber) {
+            var randomNumber = randomNumberGenerator(1, totalNumber);
+            var findNumber = findInArray(cpuNumbers, randomNumber);
+            if (findNumber == false) {
+                cpuNumbers.push(randomNumber);
+            }
+        }
+        console.log("Numeri Bomba: " + cpuNumbers.sort());
+        
+        // Chiedo all'utente di inserire uno alla volta un numero con 84 tentativi a disposizione.
+        
+        while (userNumbers.length < attempts && foundNumber == false) {
+            userNumber = parseInt(prompt("Inserisci un numero da 1 a " + totalNumber));
+            wrongNumber();
+            
+            if (findInArray(userNumbers, userNumber) == false) {
+                // Se il numero non è presente viene normalmente inviato.
+                userNumbers.push(userNumber);
+                // Se il numero è nella lista della CPU la partite si conclude.
+                if (findInArray(cpuNumbers, userNumber) == true) {
+                    console.log("GAME OVER!");
+                    foundNumber = true;
+                } else {
+                    score+= 1;
+                }
+            }
+        }
+        
+        if (userNumbers.length == attempts) {
+            console.log("Hai vinto la partita! GG!")
+        } else {
+            console.log("Mi dispiace, hai perso!")
+        }
+        console.log("Punteggio totale: " + score);
+        
+        
     }
-  }
-
-if (userNumbers.length == attempts) {
-    console.log("Hai vinto la partita! GG!")
-} else {
-    console.log("Mi dispiace, hai perso!")
-}
-console.log("Punteggio totale: " + score);
-
-
+)
 
 /* ----- FUNZIONI ----- */
 
@@ -80,7 +108,7 @@ function findInArray(array, element) {
 
 // Funzione per RIchiedere un numero corretto in caso di numero errato.
 function wrongNumber () {
-    while (correctNumberCheck(1, 100, userNumber) == false) {
+    while (correctNumberCheck(1, totalNumber, userNumber) == false) {
         userNumber = parseInt(prompt("!!! NUMERO ERRATO. INSERIRE UN NUMERO DA 1 A 100 !!!"));
         console.log(userNumber);
     }
