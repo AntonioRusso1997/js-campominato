@@ -3,3 +3,107 @@
     padding: 0;
     box-sizing: border-box;
 }
+
+.clearfix::after {
+    display: table;
+    content: "";
+    clear: both;
+}
+
+body {
+    background-color: lightseagreen;
+}
+
+.container {
+    width: 80vw;
+    margin: auto;
+}
+
+.difficulty-container,
+.field-container {
+    width: 90%;
+    margin: 40px auto;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 50px;
+    background-color: rgb(211, 211, 211);
+    border-radius: 30px;
+    box-shadow: -10px 0px 13px -7px #000000, 10px 0px 13px -7px #000000, 5px 5px 15px 5px rgba(0,0,0,0);
+}
+
+.box {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-around;
+    align-items: center;
+    margin: 0 30px;
+}
+
+.btn-box {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 0 30px;
+}
+
+.diff-label {
+    font-size: 22px;
+    margin-bottom: 20px;
+}
+
+.diff-label span {
+    color: red;
+    font-size: 30px;
+}
+
+.diff-select {
+    height: 30px;
+    font-size: 20px;
+    border: none;
+    border-radius: 10px;
+}
+
+.btn-box button {
+    cursor: pointer;
+    font-size: 22px;
+    padding: 10px;
+    margin: 0 10px;
+    border: none;
+    border-radius: 10px;
+    background-color: limegreen;
+    color: white;
+}
+
+.btn-box button:last-child {
+    background-color: red;
+}
+
+.btn-box button:hover {
+    background-color: rgb(52, 160, 52);
+}
+
+.btn-box button:last-child:hover {
+    background-color: rgb(170, 26, 26);
+}
+
+#field {
+    width: 35vw;
+    height: 35vw;
+    margin: auto;
+}
+
+.square {
+    width: calc(35vw / 10);
+    height: calc(35vw / 10);
+    float: left;
+    border-radius: 20px;
+}
+
+.cell {
+    width: 100%;
+    height: 100%;
+    border: 1px solid black;
+    background-color: gray;
+    border-radius: 10px;
+}

@@ -42,10 +42,11 @@ startBtn.addEventListener("click",
                 totalNumber = 100;
                 attempts = totalNumber - bombNumber;
         }
+
+        createGrid(totalNumber);
         
         //La CPU genera i 16 numeri casuali       
-        
-        
+              
         // Creo ciclo while dove indico anche la condizione per inserire un numero solo se non è già presente nell'array.
         while (cpuNumbers.length < bombNumber) {
             var randomNumber = randomNumberGenerator(1, totalNumber);
@@ -54,7 +55,9 @@ startBtn.addEventListener("click",
                 cpuNumbers.push(randomNumber);
             }
         }
-        console.log("Numeri Bomba: " + cpuNumbers.sort());
+        
+        console.log("Numeri Bomba: " + cpuNumbers);
+        
         
         // Chiedo all'utente di inserire uno alla volta un numero con 84 tentativi a disposizione.
         
@@ -80,7 +83,7 @@ startBtn.addEventListener("click",
         } else {
             console.log("Mi dispiace, hai perso!")
         }
-        console.log("Punteggio totale: " + score);
+        console.log("Punteggio totale: " + score);       
         
         
     }
@@ -121,4 +124,21 @@ function correctNumberCheck(min, max, number) {
         result = true;
     }
     return result;
+}
+
+// Funzione per creare la "griglia" del campo minato
+function createGrid(cells) {
+    
+
+    for (let i = 1; i <= cells; i++) {
+
+        let cell = `
+        <div data-cell="${i}" class="cell"></div>
+        `;
+        
+        let cellTemplate = document.createElement('DIV');
+        cellTemplate.classList.add("square");
+        cellTemplate.innerHTML = cell;
+        document.getElementById("field").appendChild(cellTemplate);
+    }
 }
