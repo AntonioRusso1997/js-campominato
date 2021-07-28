@@ -58,32 +58,50 @@ startBtn.addEventListener("click",
         
         console.log("Numeri Bomba: " + cpuNumbers);
         
-        
-        // Chiedo all'utente di inserire uno alla volta un numero con 84 tentativi a disposizione.
-        
-        while (userNumbers.length < attempts && foundNumber == false) {
-            userNumber = parseInt(prompt("Inserisci un numero da 1 a " + totalNumber));
-            wrongNumber();
-            
-            if (findInArray(userNumbers, userNumber) == false) {
-                // Se il numero non è presente viene normalmente inviato.
-                userNumbers.push(userNumber);
-                // Se il numero è nella lista della CPU la partite si conclude.
-                if (findInArray(cpuNumbers, userNumber) == true) {
-                    console.log("GAME OVER!");
-                    foundNumber = true;
-                } else {
-                    score+= 1;
-                }
+        document.getElementById("field").addEventListener("click", 
+        function(e) {
+            console.log(e.target.dataset.cell);
+            let element = document.querySelectorAll(
+              "[data-cell='" + e.target.dataset.cell + "']"
+            );
+          
+            if (cpuNumbers.includes(parseInt(e.target.dataset.cell))) {
+              element[0].classList.add("red");
+              alert("Boom! mi dispiace");
+              alert("Punteggio totale: " + score);
+              location.reload();
+            } else if (userNumbers.indexOf(e.target.dataset.cell) == -1) {
+              element[0].classList.add("green");
+              userNumbers.push(e.target.dataset.cell);
+              score++;
             }
-        }
+          });
         
-        if (userNumbers.length == attempts) {
-            console.log("Hai vinto la partita! GG!")
-        } else {
-            console.log("Mi dispiace, hai perso!")
-        }
-        console.log("Punteggio totale: " + score);       
+        // // Chiedo all'utente di inserire uno alla volta un numero con 84 tentativi a disposizione.
+        
+        // while (userNumbers.length < attempts && foundNumber == false) {
+        //     userNumber = parseInt(prompt("Inserisci un numero da 1 a " + totalNumber));
+        //     wrongNumber();
+            
+        //     if (findInArray(userNumbers, userNumber) == false) {
+        //         // Se il numero non è presente viene normalmente inviato.
+        //         userNumbers.push(userNumber);
+        //         // Se il numero è nella lista della CPU la partite si conclude.
+        //         if (findInArray(cpuNumbers, userNumber) == true) {
+        //             console.log("GAME OVER!");
+        //             foundNumber = true;
+        //         } else {
+        //             score+= 1;
+        //         }
+        //     }
+        // }
+        
+        // if (userNumbers.length == attempts) {
+        //     console.log("Hai vinto la partita! GG!")
+        // } else {
+        //     console.log("Mi dispiace, hai perso!")
+        // }
+        // console.log("Punteggio totale: " + score);       
         
         
     }
@@ -133,7 +151,7 @@ function createGrid(cells) {
     for (let i = 1; i <= cells; i++) {
 
         let cell = `
-        <div data-cell="${i}" class="cell"></div>
+        <div data-cell="${i}" class="cell">${i}</div>
         `;
         
         let cellTemplate = document.createElement('DIV');
